@@ -18,40 +18,8 @@ from threading import Thread
 app = Flask('')
 
 
-@app.route('/')
-def home():
-    return "Men uyg'oqman!"
 
-
-def run():
-    # Render beradigan PORT-ni oladi yoki 8080-ni ishlatadi
-    port = int(os.environ.get("PORT", 8080))
-    app.run(host='0.0.0.0', port=port)
-
-
-def keep_alive():
-    t = Thread(target=run)
-    t.start()
-
-
-# ... botingizning asosiy funksiyalari (start, message_handler va h.k.) ...
-
-if __name__ == '__main__':
-    # 2. Botni ishga tushirishdan oldin Flask-ni yoqamiz
-    keep_alive()
-
-    # 3. Sizning ApplicationBuild kodingiz
-    application = ApplicationBuilder().token(BOT_TOKEN).build()
-
-    # Handlerlarni qo'shish...
-    # application.add_handler(...)
-
-    print("Bot ishga tushdi...")
-    application.run_polling()
-
-
-
-BOT_TOKEN = "8405205988:AAGe3oGECGW_ZXt4xJjyS54Jq1f5VP29Ju4"
+BOT_TOKEN = os.environ.get('BOT_TOKEN', "8405205988:AAGe3oGECGW_ZXt4xJjyS54Jq1f5VP29Ju4")
 DATA_FILE = "data.json"
 
 logging.basicConfig(level=logging.INFO)
@@ -510,3 +478,24 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+@app.route('/')
+def home():
+    return "Men uyg'oqman!"
+
+
+def run():
+    # Render beradigan PORT-ni oladi yoki 8080-ni ishlatadi
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host='0.0.0.0', port=port)
+
+
+def keep_alive():
+    t = Thread(target=run)
+    t.start()
+
+if __name__ == '__main__':
+    keep_alive()
+    application = ApplicationBuilder().token(BOT_TOKEN).build()
+    print("Bot ishga tushdi...")
+    application.run_polling()
