@@ -14,7 +14,7 @@ from telegram.ext import (
 import os
 from flask import Flask
 from threading import Thread
-
+from uptimer import start_uptimer
 app = Flask('')
 
 
@@ -499,3 +499,15 @@ if __name__ == '__main__':
     application = ApplicationBuilder().token(BOT_TOKEN).build()
     print("Bot ishga tushdi...")
     application.run_polling()
+
+
+def main():
+    # 1. Uptimer'ni botdan oldin ishga tushiring
+    start_uptimer()
+    print("✅ Hisobot-bot uchun Uptimer yoqildi")
+
+    # 2. Botni ishga tushirish (ApplicationBuilder yoki executor)
+    # app.run_polling() yoki hokazo...
+
+if __name__ == "__main__":
+    main()
